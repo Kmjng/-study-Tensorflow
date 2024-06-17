@@ -1,0 +1,40 @@
+1. 구글 Colab 사용하기
+
+[파일] -> [새 노트] 작성 
+
+# tensorflow 버전 확인 
+[셀 입력] 
+import tensorflow as tf
+tf.__version__ 
+
+# python 버전 확인  
+[셀 추가] -> [셀 입력]
+!python --version 
+
+# sklearn 버전 확인 
+[셀 추가] -> [셀 입력]
+import sklearn
+sklearn.__version__
+
+# local 파일 열기
+[셀 추가] -> [셀 입력] 
+
+from google.colab import files
+import pandas as pd
+import io
+
+uploaded = files.upload() #  [파일 선택] -> iris.csv
+
+[셀 추가] -> [셀 입력] 
+df = pd.read_csv(io.BytesIO(uploaded['iris.csv']))
+df.info()
+
+# 노트 이름 변경 : [파일] -> [노트 이름 변경]
+# 노트 다운로드 : [파일] -> [.ipynb 다운로드]
+
+
+# 2. 가속기(GPU) 사용하기
+#  이미지 분류 등의 다차원 배열 처리 or 병렬 처리 시 가속기를 사용하면 처리속도가 향상된다.
+# [런타임] -> [런타임 유형 변경] -> 하드웨어 가속시 [GPU] 선택 -> [저장] - [실행]
+
+

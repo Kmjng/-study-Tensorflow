@@ -1,0 +1,51 @@
+
+# many-to-one : word(4개) -> 출력(1개)
+
+X = [[[0.0], [0.1], [0.2], [0.3]],
+     [[0.1], [0.2], [0.3], [0.4]],
+     [[0.2], [0.3], [0.4], [0.5]],
+     [[0.3], [0.4], [0.5], [0.6]],
+     [[0.4], [0.5], [0.6], [0.7]],
+     [[0.5], [0.6], [0.7], [0.8]]] 
+
+Y = [0.4, 0.5, 0.6, 0.7, 0.8, 0.9]
+
+
+
+# 문장 생성기 
+def sentence_generation(search_word, n=0): # 검색 단어, 단어길이
+    global model, tokenizer, max_len, X
+      
+    seq_idx = tokenizer.texts_to_sequences([search_word])[0]      
+    # 검색 단어 길이 결정  
+    for row in X :
+        if seq_idx in row : 
+                n += 1
+                
+    if n == 0 : # "해당 단어 없음"
+        return 0
+    
+    sentence = '' # 문장 save
+    start_word = search_word # 검색 단어 변수 저장 
+
+    for i in range(n): # n번 반복       
+        seq_idx = tokenizer.texts_to_sequences([search_word])[0]#현재 단어 정수인코딩
+        encoded = pad_sequences([seq_idx], maxlen=max_len-1) # 데이터에 대한 패딩
+        result = model.predict_classes(encoded, verbose=0)   
+
+        for word, index in tokenizer.word_index.items(): 
+            if index == result: # 만약 예측한 단어와 인덱스와 동일한 단어가 있다면
+                break # 해당 단어가 예측 단어이므로 break
+        search_word = search_word + ' '  + word # 현재 단어+ ' '+예측 단어 ->현재 단어 변경
+        sentence = sentence + ' ' + word # 예측 단어 문장 생성
+    
+    sentence = start_word + sentence
+    return sentence
+
+# 검색 단어 입력 
+while(True) :
+    result = sentence_generation(input("검색단어 : "))
+    print(result)
+    if result == 0 :
+        print("해당 단어 없음")
+        break
