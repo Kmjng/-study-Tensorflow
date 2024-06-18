@@ -82,12 +82,3 @@ def softmax(x) :
 y2 = softmax(x_data)
 print(y2.numpy())# [0.01714783 0.04661262 0.93623955] : 확률 
 
-
-
-
-
-
-
-
-
-

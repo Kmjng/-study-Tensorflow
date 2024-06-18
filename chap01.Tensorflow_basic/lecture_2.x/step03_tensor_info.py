@@ -11,34 +11,53 @@ Tensor 정보 제공 함수
 import tensorflow as tf
 print(tf.__version__) # 2.3.0
 
-scala = tf.constant(1234) # 상수 
+scalar = tf.constant(1234) # 상수 
 vector = tf.constant([1,2,3,4,5]) # 1차원 
 matrix = tf.constant([ [1,2,3], [4,5,6] ]) # 2차원
 cube = tf.constant([[ [1,2,3], [4,5,6], [7,8,9] ]]) # 3차원 
 
-print(scala)
+print(scalar)
 print(vector)
 print(matrix)
 print(cube)
 
 # 1. tensor shape 
+
 print('\ntensor shape')
-print(scala.get_shape()) # () scalar.shape
+print(scalar.get_shape()) # () scalar.shape과 같은 의미 
 print(vector.get_shape()) # (5,)
 print(matrix.get_shape()) # (2, 3)
 print(cube.get_shape()) # (1, 3, 3)
 
   
-# 2. tensor rank
-print('\ntensor rank')
-print(tf.rank(scala)) 
-print(tf.rank(vector)) 
-print(tf.rank(matrix)) 
-print(tf.rank(cube))
+# 2. tensor rank 
+print('\ntensor rank') # 차원
+print(tf.rank(scalar)) # tf.Tensor(0, shape=(), dtype=int32)
+print(tf.rank(vector)) # tf.Tensor(1, shape=(), dtype=int32)
+print(tf.rank(matrix)) # tf.Tensor(2, shape=(), dtype=int32)
+print(tf.rank(cube))   # tf.Tensor(3, shape=(), dtype=int32)
 
 # 3. tensor size
-print('\ntensor size')
-print(tf.size(scala)) 
-print(tf.size(vector)) 
-print(tf.size(matrix)) 
-print(tf.size(cube))
+print('\ntensor size') # 원소 수 
+print(tf.size(scalar)) # tf.Tensor(1, shape=(), dtype=int32)
+print(tf.size(vector)) # tf.Tensor(5, shape=(), dtype=int32)
+print(tf.size(matrix)) # tf.Tensor(6, shape=(), dtype=int32)
+print(tf.size(cube))   # tf.Tensor(9, shape=(), dtype=int32)
+
+
+dir(tf)
+
+# 4. tensor reshape 
+cube
+cube.shape # TensorShape([1, 3, 3])
+cube_2D = tf.reshape(cube, (3,3))
+cube_2D
+
+
+
+
+
+
+
+
+
