@@ -66,8 +66,13 @@ model.add(Dense(units=3, activation = 'softmax')) # 3층
 
 
 # 4. model compile : 학습과정 설정(다항분류기) 
-from tensorflow.keras import optimizers
-
+from tensorflow.keras import optimizers # 딥러닝 최적화 알고리즘 
+dir(optimizers)
+'''
+Adam
+RMSprop
+SGD
+'''
 model.compile(optimizer=optimizers.Adam(learning_rate=0.01), 
               loss = 'categorical_crossentropy',  
               metrics=['accuracy'])
@@ -84,6 +89,14 @@ model.fit(x=x_train, y=y_train, # 훈련셋
 print('='*30)
 print('model evaluation')
 model.evaluate(x=x_val, y=y_val)
+
+'''
+Adam(learning_rate=0.001)
+loss: 0.1898 - accuracy: 0.9111
+
+Adam(learning_rate=0.01)
+loss: 0.0525 - accuracy: 0.9778
+'''
 
 
 # 7. model save & load : HDF5 파일 형식 

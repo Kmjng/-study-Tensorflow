@@ -59,9 +59,12 @@ y_val = to_categorical(y_val)
 # 3. keras layer & model 생성
 model = Sequential()
 
+x_train.shape # (60000, 784)
+
+input_dim = (784, ) # 1d
 
 # hidden layer1 : w[784, 128]
-model.add(Dense(units=128, input_shape=(784,), activation='relu'))# 1층 
+model.add(Dense(units=128, input_shape=input_dim, activation='relu'))# 1층 
 
 # hidden layer2 : w[128, 64]
 model.add(Dense(units=64, activation='relu'))# 2층 
@@ -84,15 +87,20 @@ model.compile(optimizer='adam',
 
 # 5. model training : train(70) vs val(30)
 model.fit(x=x_train, y=y_train, # 훈련셋 
-          epochs=10, 
-          batch_size=100, 
+          epochs=10, # 1epoch : 전체 데이터셋을 1회 소진 -> 600,000장 이미지   
+          batch_size=100, # 1회 모델 공급 크기(100*600=60,000) 
           verbose=1, # 출력여부 
           validation_data= (x_val, y_val)) # 검증셋
 
+'''
+Epoch 10/10
+600/600 [==============================] - 1s 2ms/step 
+- loss: 0.0237 - accuracy: 0.9920 - val_loss: 0.0784 - val_accuracy: 0.9785
+'''
 
 # 6. model evaluation : val dataset 
 print('model evaluation')
-model.evaluate(x=x_val, y=y_val)
+model.evaluate(x=x_val, y=y_val) # 10,000장 이미지 
 
 
 

@@ -59,6 +59,19 @@ model.add(Dense(units=6, activation = 'relu')) # 2층
 model.add(Dense(units=3, activation = 'softmax')) # 3층 : [수정]
 
 model.summary()
+'''
+___________
+ Layer (type)                Output Shape              Param #   
+=================================================================
+ dense_3 (Dense)             (None, 12)                60=w[4x12]+b[12]        
+                                                                 
+ dense_4 (Dense)             (None, 6)                 78=w[12x6]+b[6]        
+                                                                 
+ dense_5 (Dense)             (None, 3)                 21=w[6x3]+b[3]        
+                                                                 
+=================================================================
+Total params: 159
+'''
 
 
 # 4. model compile : 학습과정 설정(다항분류기) 
@@ -78,3 +91,32 @@ model.fit(x=x_train, y=y_train, # 훈련셋
 print('='*30)
 print('model evaluation')
 model.evaluate(x=x_val, y=y_val)
+
+
+# 7. model save & load 
+dir(model)
+
+model.save('keras_model_iris.h5') # HDF5 파일 형식 
+
+new_model = load_model('keras_model_iris.h5')
+
+
+# 8. 평가셋(test) & 모델 평가 
+x_train, x_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.5, random_state=123)
+
+y_pred = new_model.predict(x_test) # 확률예측 
+# 확률예측 -> 10진수 변경 
+y_pred = tf.argmax(y_pred, axis=1)
+
+# 2진수 -> 10진수 변경
+y_test = tf.argmax(y_test, axis=1)
+
+acc = accuracy_score(y_test, y_pred)  
+print('accuracy =', acc) # accuracy = 0.9466666666666667
+
+
+
+
+
+

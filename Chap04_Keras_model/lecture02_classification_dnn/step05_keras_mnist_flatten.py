@@ -54,13 +54,15 @@ y_val = to_categorical(y_val)
 # 3. keras layer & model 생성
 model = Sequential()
 
+x_train.shape # (60000, 28, 28)
+input_dim = (28, 28) # 2d
 
 # flatten layer [추가] 
-model.add(Flatten(input_shape = (28,28)))  # 2d -> 1d(784)
+model.add(Flatten(input_shape = input_dim))  # 2d/3d -> 1d(784)
 
 
 # hidden layer1 : w[784, 128]
-model.add(Dense(units=128, input_shape=(784,), activation='relu'))# 1층 
+model.add(Dense(units=128, activation='relu'))# 1층 
 
 # hidden layer2 : w[128, 64]
 model.add(Dense(units=64, activation='relu'))# 2층 
