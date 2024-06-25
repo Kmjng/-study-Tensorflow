@@ -18,13 +18,13 @@ import matplotlib.pyplot as plt # image print
 from matplotlib.image import imread # image read
 
 # 1. image load 
-img = imread("C:/ITWILL/7_Tensorflow/data/images/parrots.png")
+img = imread("C:/ITWILL/7_Tensorflow/Tensorflow/data/images/parrots.png")
 plt.imshow(img)
 plt.show()
 
 # 2. image shape & RGB 픽셀값 
-print(img.shape) # (512, 768, 3) 
-print(img)
+print(img.shape) # (512, 768, 3)  # h, w, ch (ch: 컬러R,G,B)
+print(img) 
  
 
 # 3. input image 만들기   
@@ -37,10 +37,11 @@ Filter = tf.Variable(tf.random.normal([9,9,3,5])) # [h, w, c, fmap]
 
 # 5. Convolution layer 
 conv2d = tf.nn.conv2d(Img, Filter, 
-                      strides=[1,2,2,1], padding='SAME')
+                      strides=[1,2,2,1], # stride 2칸씩 이동이라서 
+                      padding='SAME') # padding이 'SAME'이어도 절반으로 줄어듦 
 
 # 합성곱(Convolution) 연산 결과 
-conv2d_img = np.swapaxes(conv2d, 0, 3)
+conv2d_img = np.swapaxes(conv2d, 0, 3) # 0번째 <--> 3번째 원소 
 conv2d_img.shape # (5, 256, 384, 1)  
 
 fig = plt.figure(figsize = (20, 6))  

@@ -53,9 +53,18 @@ model = Sequential()
 # 2) layer 구축 
 # Conv layer1 : Conv + MaxPool
 model.add(Conv2D(filters=32, kernel_size=(5, 5),                  
-                 input_shape = input_shape, activation='relu')) 
+                 input_shape = input_shape, # (32, 32, 3)
+                 activation='relu')) # padding default VALID 
 model.add(MaxPool2D(pool_size=(3, 3), strides=(2, 2))) 
-
+'''
+filter = 32 : 특징맵 32장
+kernel_size = (5,5) : 커널(필터)의 세로/가로 크기 
+strides = (1,1) : 커널 세로/가로 이동 크기 
+padding = 'VALID' : 합성곱으로 특징맵 크기 결정 
+-----------------------------------------------
+pool_size = (3, 3) : pooling window 크기 
+strides = (2, 2) : (합성곱 이후 strides를 통해 차원 줄이기)
+'''
 
 # Conv layer2 : Conv + MaxPool 
 model.add(Conv2D(filters=64, kernel_size=(5, 5), activation='relu')) 
@@ -65,7 +74,8 @@ model.add(MaxPool2D(pool_size=(3, 3), strides=(2, 2)))
 model.add(Conv2D(filters=128, kernel_size=(3, 3), activation='relu'))
 
 # 전결합층 : Flatten layer 
-model.add(Flatten()) 
+model.add(Flatten()) # 3d/2d -> 1d 
+# (컬러이면 3d, 흑백이면 2d)
 
 # DNN1 : hidden layer 
 model.add(Dense(units=64, activation='relu'))
@@ -75,7 +85,38 @@ model.add(Dense(units = 10, activation='softmax'))
                   
 
 model.summary()
-
+'''
+Model: "sequential"
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #   
+=================================================================
+ conv2d (Conv2D)             (None, 28, 28, 32)        2432      
+                                                                 
+ max_pooling2d (MaxPooling2D  (None, 13, 13, 32)       0         
+ )                                                               
+                                                                 
+ conv2d_1 (Conv2D)           (None, 9, 9, 64)          51264     
+                                                                 
+ max_pooling2d_1 (MaxPooling  (None, 4, 4, 64)         0         
+ 2D)                                                             
+                                                                 
+ conv2d_2 (Conv2D)           (None, 2, 2, 128)         73856     
+         
+ ---------------------
+ flatten_1 전까지 3D                                                        
+ ---------------------
+ flatten (Flatten)           (None, 512)               0         
+                                                                 
+ dense (Dense)               (None, 64)                32832     
+                                                                 
+ dense_1 (Dense)             (None, 10)                650       
+                                                                 
+=================================================================
+Total params: 161,034
+Trainable params: 161,034
+Non-trainable params: 0
+_________________________________________________________________
+'''
 
 # 4. model compile : 학습과정 설정(다항분류기) 
 model.compile(optimizer='adam', 
@@ -84,13 +125,17 @@ model.compile(optimizer='adam',
 
 
 # 5. model training : train(105) vs val(45) 
-model_fit = model.fit(x=x_train, y=y_train, # 훈련셋 
-          epochs=10, # 반복학습 
+model_fit = model.fit(x=x_train, y=y_train, # 훈련셋 (50,000장)
+          epochs=10, # 반복학습  # 50,000 * 10 번
           batch_size = 100, # 1회 공급 image size 
+                      # 100장 씩 500번(iteration) => 50000 
           verbose=1, # 출력여부 
           validation_data=(x_val, y_val)) # 검증셋 
 
-
+'''
+val_accuracy: 0.6865 : 이미지의 노이즈에 의해 70% 언저리로 나옴 
+epoch vs accuracy 그래프에서 train - val 간격이 클 수록 과적합 우려 
+'''
 # 6. CNN model 평가 : val dataset 
 print('='*30)
 print('model evaluation')
@@ -118,15 +163,6 @@ plt.xlabel('epochs')
 plt.ylabel('accuracy')
 plt.legend(loc='best')
 plt.show()
-
-
-
-
-
-
-
-
-
 
 
 
