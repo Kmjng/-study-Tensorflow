@@ -17,14 +17,14 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Embedding, LSTM # 순환신경망 
 
 # 1. csv file laod 
-path = r'C:\ITWILL\7_Tensorflow\data'
+path = r'C:/ITWILL/7_Tensorflow/Tensorflow/data'
 spam_data = pd.read_csv(path + '/spam_data.csv', header = None)
 
 
 label = spam_data[0] 
 texts = spam_data[1]
-
-
+texts
+spam_data
 # 2. texts와 label 전처리
 
 # 1) label 전처리 

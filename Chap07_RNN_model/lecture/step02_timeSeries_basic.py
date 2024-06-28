@@ -22,7 +22,7 @@ import os
 os.environ['KMP_DUPLICATE_LIB_OK'] = 'True'
 
 # 1. csv file read  
-path = r'C:\ITWILL\7_Tensorflow\data'
+path = r'C:/ITWILL/7_Tensorflow/Tensorflow/data'
 timeSeries = pd.read_csv(path + '/timeSeries.csv')
 
 data = timeSeries['data']

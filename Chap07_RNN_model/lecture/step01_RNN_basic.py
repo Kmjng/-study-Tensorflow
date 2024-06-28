@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-step01_RNN_LSTM_basic.py
+step01_RNN_basic.py
 
 RNN model 
  - 순환신경망 Many to One RNN 모델(PPT.8 참고)  

@@ -29,7 +29,7 @@ tf.random.set_seed(13) # Random Seed Setting
 '''
 
 # 1. csv file read : 에나 기후(jena climate) dataset 
-path = r'C:\ITWILL\7_Tensorflow\data'
+path = r'C:/ITWILL/7_Tensorflow/Tensorflow/data'
 df = pd.read_csv(path+'/jena_climate_2009_2016.csv')
 df.info() # 420551
 '''
